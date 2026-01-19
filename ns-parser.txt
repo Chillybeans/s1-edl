@@ -1,0 +1,32 @@
+{
+  "timezone": "GMT",
+  "attributes": {
+    "dataset": "netscalerlog",
+    "dataSource.category": "security",
+    "dataSource.name": "netscaler",
+    "dataSource.vendor": "Citrix",
+    "metadata.product.name": "NetScaler Syslog",
+    "metadata.product.vendor_name": "NetScaler"
+  },
+  "patterns": {
+    "datetime": "\\d{2}/\\d{2}/\\d{4}:\\d{2}:\\d{2}:\\d{2}",
+    "timezone": "\\w+",
+    "nsname": "\\w+",
+    "hostname": "\\w+",
+    "instance": "\\w+",
+    "category": "\\w+",
+    "client_ip": "(?<=Client_ip )(\\d+\\.\\d+\\.\\d+\\.\\d+)|(?<=::ffff:)(\\d+\\.\\d+\\.\\d+\\.\\d+)",
+    "fullmsg": "\".*\""
+  },
+  "formats": [
+    {
+      "id": "detailed",
+      "attributes": {
+        "log_type": "detailed",
+        "detailed": true
+      },
+      "format": "\\w{3}\\s+\\d{1,2}\\s+\\d{2}:\\d{2}:\\d{2} ::ffff:$client_ip$ $datetime$ $timezone$ $hostname$ $instance$ : $category$ $fullmsg$",
+      "halt": true
+    }
+  ]
+}
